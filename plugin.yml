@@ -2,6 +2,7 @@ name: SimpleMail
 description: A simple mail plugin for Bukkit servers
 version: 2.0
 author: x3chaos
+website: http://github.com/x3chaos/simplemail
 
 main: org.x3.mail.SimpleMail
 database: false
@@ -9,5 +10,12 @@ database: false
 commands:
   mail:
     description: SimpleMail catch-all command
-    usage: |
-      SimpleMail help: /mail help [topic]
+    aliases: [sm]
+    usage: §cSimpleMail help: /<command> help [topic]
+    permission: simplemail.*
+    permission-message: ""
+
+permissions:
+  simplemail.*:
+    description: Gives access to /mail.
+    default: true
