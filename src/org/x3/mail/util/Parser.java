@@ -3,7 +3,7 @@ package org.x3.mail.util;
 import java.util.HashMap;
 import java.util.logging.Logger;
 
-import org.x3.stringutils.StringUtils;
+import org.l3eta.StringUtils;
 
 public class Parser {
 

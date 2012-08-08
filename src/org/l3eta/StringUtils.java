@@ -1,4 +1,4 @@
-package org.x3.stringutils;
+package org.l3eta;
 
 public class StringUtils {
 
