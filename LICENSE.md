@@ -1,5 +1,5 @@
-SimpleMail - A simpler mail system for Bukkit servers  
-Copyright &copy; 2012 x3chaos (Shawn Lutch)
+#### SimpleMail - A simpler mail system for Bukkit servers  
+_Copyright &copy; 2012 x3chaos (Shawn Lutch)_
 
 This program is free software: you can redistribute it and/or modify it under the terms of version 3 of the GNU General Public License as published by the Free Software Foundation.
 
