@@ -32,7 +32,7 @@ Minecraft 1.3.1 consisted of a few bug fixes, some launcher updates, some behind
 
 SimpleMail v2.x is fully compatible and tested with 1.3.1.
 
-_(Note: at the time of this writing, the current CraftBukkit version is CB 1.3.1-R1.0. By the time this write-up is published, CraftBukkit - and potentially Minecraft - will probably have been updated at least twice. Such is life.)_
+_(Note: at the time of this writing, the current CraftBukkit version is CB 1.3.1-R1.0. By the time that the final version of this write-up is published, CraftBukkit will probably have been updated at least once. Such is life.)_
 
 #### Credit where credit is due
 
