@@ -103,7 +103,7 @@ Think the vanilla `/help` command. I'm going to look through Bukkit's source and
 
 #### Mailboxes
 
-I eventually want to create a system consisting of several mailboxes (inbox, trash, starred, etc.) and incorporate it into `/mail get`. This isn't hard, but it will involve some minor rewriting.
+I eventually want to create a system consisting of several mailboxes (inbox, trash, starred, etc.) and incorporate it into `/mail get`. This isn't hard, but it will involve some minor rewriting.  
 
 #### Permissions
 
