@@ -56,6 +56,10 @@ Admittedly, the v2.x release only slightly fixes the readability issue. The addi
 
 Oh, and that reminds me: there will be more original classes introduced as time progresses. As of now, the only utilized class is `org.x3.mail.util.Message`, but the addition of permissions support and other fun features will undoubtedly be followed by the addition of more objects. This coding stuff is fun!
 
+#### Documentation
+
+v1.0 had almost zero documentation built-in, which probably helped contribute to the clutter in the -ahem- two classes. With v2.x, documentation is built-in like it should be.
+
 ***
 
 ## 3. New features in v2.x
@@ -111,7 +115,7 @@ A previous copy of v2.0 (now trashed, of course) used the basic built-in Bukkit 
 
 ***
 
-######SimpleMail v2.x &copy; 2012 x3chaos (Shawn Lutch). Last README update at 01:24 on 8/8/12.
+######SimpleMail v2.x &copy; 2012 x3chaos (Shawn Lutch). Last README update at 11:55 on 8/8/12.
 
 [1]: http://github.com/l3eta
 [2]: http://www.xkcd.com/844
