@@ -20,6 +20,14 @@ public class MailHandler {
 		this.mailFile = file;
 	}
 
+	/**
+	 * Loads the mail from the file specified in the constructor, unless
+	 * setMailFile() has been used.
+	 * 
+	 * @return The entire mail object.
+	 * @throws FileNotFoundException
+	 *             if the file is not found.
+	 */
 	@SuppressWarnings("unchecked")
 	public HashMap<String, ArrayList<Message>> load()
 			throws FileNotFoundException, IOException, ClassNotFoundException {
@@ -31,6 +39,15 @@ public class MailHandler {
 		return result;
 	}
 
+	/**
+	 * Saves the mail object to the file specified in the constructor, unless
+	 * setMailFile() has been used.
+	 * 
+	 * @param mail
+	 *            The mail object
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
 	public void save(HashMap<String, ArrayList<Message>> mail)
 			throws FileNotFoundException, IOException {
 		ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(
@@ -40,8 +57,23 @@ public class MailHandler {
 		out.close();
 	}
 
+	/**
+	 * Getter for the current mail file used by the handler
+	 * 
+	 * @return The mail file
+	 */
 	public File getMailFile() {
 		return mailFile;
+	}
+
+	/**
+	 * Sets the mail file to a different file than specified in the constructor
+	 * 
+	 * @param newFile
+	 *            The new file
+	 */
+	public void setMailFile(File newFile) {
+		this.mailFile = newFile;
 	}
 
 }

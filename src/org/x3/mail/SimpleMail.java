@@ -26,26 +26,56 @@ public class SimpleMail extends JavaPlugin {
 		log.info("SimpleMail enabled.");
 	}
 
-	public void registerNewMail(String recipient, Message message) {
-
-	}
-
+	/**
+	 * Returns the result of JavaPlugin.getServer().getPlayer(name)
+	 * 
+	 * @param name
+	 *            Name of the player
+	 * @return The associated player, or null if not found.
+	 */
 	public Player getPlayer(String name) {
 		return getServer().getPlayer(name);
 	}
 
+	/**
+	 * Returns whether the specified player has unread mail.
+	 * 
+	 * @param player
+	 *            The player's name
+	 * @return Whether the player has unread mail.
+	 */
 	public boolean hasMail(String player) {
 		return mail.containsKey(player.toLowerCase());
 	}
 
+	/**
+	 * Returns the player's mail.
+	 * 
+	 * @param player
+	 *            Name of the player
+	 * @return Unread messages, or null if the player has no new mail.
+	 */
 	public ArrayList<Message> getMail(String player) {
 		return mail.get(player.toLowerCase());
 	}
 
+	/**
+	 * Deletes all of the player's mail.
+	 * 
+	 * @param player
+	 *            Name of the player
+	 */
 	public void removeMail(String player) {
 		mail.remove(player.toLowerCase());
 	}
 
+	/**
+	 * Determines if the player is online.
+	 * 
+	 * @param player
+	 *            Name of the player
+	 * @return True if online, else false.
+	 */
 	public boolean isOnline(String player) {
 		for (Player p : getServer().getOnlinePlayers()) {
 			if (p.getName().equalsIgnoreCase(player)) {
@@ -55,6 +85,12 @@ public class SimpleMail extends JavaPlugin {
 		return false;
 	}
 
+	/**
+	 * Send a message. The target player is specified within the message.
+	 * 
+	 * @param message
+	 *            The message to send
+	 */
 	public void send(Message message) {
 		String recipient = message.getRecipient().toLowerCase();
 		ArrayList<Message> playerMail;
@@ -71,6 +107,12 @@ public class SimpleMail extends JavaPlugin {
 		}
 	}
 
+	/**
+	 * Notify the player that they have new messages.
+	 * 
+	 * @param player
+	 *            Player to notify
+	 */
 	public void notifyPlayer(Player player) {
 		player.sendMessage(ChatColor.GREEN
 				+ String.format("You have %s new message(s).",

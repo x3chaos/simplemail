@@ -21,6 +21,8 @@ public class SMExecutor implements CommandExecutor {
 		this.sm = sm;
 	}
 
+	// TODO CLEAN THE HELL OUT OF THIS.
+
 	@Override
 	public boolean onCommand(CommandSender cmdSender, Command command,
 			String label, String[] args) {
@@ -83,6 +85,13 @@ public class SMExecutor implements CommandExecutor {
 		return false;
 	}
 
+	/**
+	 * Processes the player's request for a help topic
+	 * 
+	 * @param topic
+	 *            The requested topic
+	 * @return The information on that topic
+	 */
 	private String getTopic(String topic) {
 		topic = topic.toLowerCase();
 		if (helpTopics.containsKey(topic)) {
@@ -92,6 +101,15 @@ public class SMExecutor implements CommandExecutor {
 		}
 	}
 
+	/**
+	 * Reorders the messages in a player's inbox by priority (currently only
+	 * performed when mail is requested)
+	 * 
+	 * @param mail
+	 *            The player's inbox
+	 * @return Reordered {@code Message[]} object (for more accurate order than
+	 *         an {@code ArrayList<Message>}
+	 */
 	private Message[] reorderMessages(ArrayList<Message> mail) {
 		Message[] result = new Message[mail.size()];
 		int count = 0;

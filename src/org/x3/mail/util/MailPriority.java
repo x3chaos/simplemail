@@ -12,10 +12,23 @@ public enum MailPriority {
 		this.code = code;
 	}
 
+	/**
+	 * Returns the code (integer) associated with the MailPriority
+	 * 
+	 * @return The code
+	 */
 	public int getCode() {
 		return code;
 	}
 
+	/**
+	 * Returns the MailPriority associated with the code, or null if an invalid
+	 * code is given.
+	 * 
+	 * @param code
+	 *            The given code
+	 * @return The MailPriority associated with the code
+	 */
 	public static MailPriority getByCode(int code) {
 		return codes.get(code);
 	}
