@@ -1,5 +1,6 @@
 .settings
 .classpath
 .project
-bin
 pages
+bin
+*.class
