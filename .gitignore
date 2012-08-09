@@ -1,6 +1,6 @@
 .settings
 .classpath
 .project
-plugin.yml
+./plugin.yml
 pages
 bin
