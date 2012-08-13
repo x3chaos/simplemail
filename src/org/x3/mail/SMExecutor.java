@@ -63,8 +63,6 @@ public class SMExecutor implements CommandExecutor {
 			}
 			ArrayList<Message> playerMail = sm.getMail(sender);
 			Message[] messages = reorderMessages(playerMail);
-			cmdSender.sendMessage(ChatColor.GRAY
-					+ String.format("----- Mail: %s -----", sender));
 			readMessages(cmdSender, messages);
 			sm.removeMail(sender);
 			pm.callEvent(new MessageReadEvent(cmdSender, messages));
@@ -150,8 +148,8 @@ public class SMExecutor implements CommandExecutor {
 		for (int i = 0; i < messages.length; i++) {
 			Message message = messages[i];
 			int priority = message.getPriority().getCode();
-			ChatColor color = (priority < 3) ? ChatColor.RED : ChatColor.GRAY;
-			String prefix = (priority < 3) ? "URGENT: " : "";
+			ChatColor color = (priority > 3) ? ChatColor.RED : ChatColor.GRAY;
+			String prefix = (priority > 3) ? "URGENT: " : "";
 			String text = String.format(message.getFormat(),
 					message.getSender(), message.getMessage());
 			sender.sendMessage(color + prefix + text);
