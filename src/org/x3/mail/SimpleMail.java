@@ -56,7 +56,8 @@ public class SimpleMail extends JavaPlugin {
 	 * @return Unread messages, or null if the player has no new mail.
 	 */
 	public ArrayList<Message> getMail(String player) {
-		return mail.get(player.toLowerCase());
+		return (mail.containsKey(player.toLowerCase())) ? mail.get(player
+				.toLowerCase()) : new ArrayList<Message>();
 	}
 
 	/**
@@ -92,18 +93,17 @@ public class SimpleMail extends JavaPlugin {
 	 *            The message to send
 	 */
 	public void send(Message message) {
-		String recipient = message.getRecipient().toLowerCase();
-		ArrayList<Message> playerMail;
+		String recipient = message.getRecipient();
+		ArrayList<Message> playerMail = getMail(recipient);
 		if (hasMail(recipient)) {
-			playerMail = mail.get(recipient);
 			mail.remove(recipient);
-		} else {
-			playerMail = new ArrayList<Message>();
 		}
 		playerMail.add(message);
 		mail.put(recipient, playerMail);
-		if (isOnline(recipient)) {
-			notifyPlayer(getPlayer(recipient));
+		if (recipient.equalsIgnoreCase("console")) {
+			log.info(ChatColor.GREEN + "New mail for Console");
+		} else if (isOnline(recipient)) {
+			notifyPlayer(getServer().getPlayer(recipient));
 		}
 	}
 

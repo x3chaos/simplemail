@@ -9,16 +9,21 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.PluginManager;
+import org.x3.mail.event.MessageReadEvent;
+import org.x3.mail.event.MessageSentEvent;
 import org.x3.mail.util.Message;
 import org.x3.mail.util.Parser;
 
 public class SMExecutor implements CommandExecutor {
 
 	private final SimpleMail sm;
+	private final PluginManager pm;
 	private static HashMap<String, String> helpTopics = new HashMap<String, String>();
 
 	public SMExecutor(SimpleMail sm) {
 		this.sm = sm;
+		this.pm = sm.getServer().getPluginManager();
 	}
 
 	// TODO CLEAN THE HELL OUT OF THIS.
@@ -29,8 +34,7 @@ public class SMExecutor implements CommandExecutor {
 		if (args.length == 0) {
 			return false;
 		}
-		String sender = (cmdSender instanceof Player) ? ((Player) cmdSender)
-				.getName() : "Console";
+		String sender = getName(cmdSender);
 		if (args[0].equalsIgnoreCase("send")) {
 			if (args.length < 3) {
 				return false;
@@ -38,48 +42,32 @@ public class SMExecutor implements CommandExecutor {
 			args[0] = sender;
 			Parser parser = new Parser(args);
 			parser.debugInfo(sm.getLogger());
+			Message message = new Message(parser);
 			cmdSender.sendMessage("Sending message to " + parser.getRecipient()
 					+ " with priority " + parser.getPriority());
-			Message message = new Message(parser);
 			sm.send(message);
-			if (message.getRecipient().equalsIgnoreCase("console")) {
-				sm.getLogger().info(ChatColor.GREEN + "New mail for console.");
-			}
+			pm.callEvent(new MessageSentEvent(message));
 			return true;
 		} else if (args[0].equalsIgnoreCase("help")) {
-			String topic;
-			if (args.length == 1) {
-				topic = "help";
-			} else {
-				topic = args[1].toLowerCase();
-			}
-			cmdSender.sendMessage(getTopic(topic));
+			String topic = (args.length > 1) ? getTopic(args[1].toLowerCase())
+					: getTopic("help");
+			cmdSender.sendMessage(topic);
 			return true;
 		} else if (args[0].equalsIgnoreCase("get")) {
-			if (args.length > 1) {
-				return false;
-			}
 			if (!(sm.hasMail(sender))) {
 				cmdSender.sendMessage(ChatColor.GRAY + "You have no new mail.");
 				return true;
+			}
+			if (args.length > 1) {
+				return false;
 			}
 			ArrayList<Message> playerMail = sm.getMail(sender);
 			Message[] messages = reorderMessages(playerMail);
 			cmdSender.sendMessage(ChatColor.GRAY
 					+ String.format("----- Mail: %s -----", sender));
-			for (int i = 0; i < messages.length; i++) {
-				Message message = messages[i];
-				ChatColor color = ChatColor.GRAY;
-				String prefix = "";
-				if (message.getPriority().getCode() == 4) {
-					color = ChatColor.RED;
-					prefix = "URGENT: ";
-				}
-				cmdSender.sendMessage(color
-						+ String.format(prefix + message.getFormat(),
-								message.getSender(), message.getMessage()));
-			}
+			readMessages(cmdSender, messages);
 			sm.removeMail(sender);
+			pm.callEvent(new MessageReadEvent(cmdSender, messages));
 			return true;
 		}
 		return false;
@@ -97,7 +85,25 @@ public class SMExecutor implements CommandExecutor {
 		if (helpTopics.containsKey(topic)) {
 			return helpTopics.get(topic);
 		} else {
-			return String.format("Help topic %s does not exist.", topic);
+			return ChatColor.RED
+					+ String.format("Help topic %s does not exist.", topic);
+		}
+	}
+
+	/**
+	 * Assigns a name to the CommandSender. If the CommandSender is a player, it
+	 * returns the name of the player; if not, it returns "Console".
+	 * 
+	 * @param sender
+	 *            The CommandSender
+	 * @return The assigned name of the CommandSender
+	 */
+
+	private String getName(CommandSender sender) {
+		if (sender instanceof Player) {
+			return ((Player) sender).getName();
+		} else {
+			return "Console";
 		}
 	}
 
@@ -124,6 +130,32 @@ public class SMExecutor implements CommandExecutor {
 			}
 		}
 		return result;
+	}
+
+	/**
+	 * Executes '/mail get' from the perspective of the given CommandSender.
+	 * This method should only be called after the player's mail has been
+	 * checked and messages have been reordered.
+	 * 
+	 * @param sender
+	 *            The sender of the command (CommandSender used for console
+	 *            support)
+	 * @param messages
+	 *            Reordered messages
+	 */
+
+	public void readMessages(CommandSender sender, Message[] messages) {
+		sender.sendMessage(ChatColor.GRAY
+				+ String.format("----- Mail: %s -----", getName(sender)));
+		for (int i = 0; i < messages.length; i++) {
+			Message message = messages[i];
+			int priority = message.getPriority().getCode();
+			ChatColor color = (priority < 3) ? ChatColor.RED : ChatColor.GRAY;
+			String prefix = (priority < 3) ? "URGENT: " : "";
+			String text = String.format(message.getFormat(),
+					message.getSender(), message.getMessage());
+			sender.sendMessage(color + prefix + text);
+		}
 	}
 
 	static {
