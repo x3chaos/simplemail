@@ -12,7 +12,8 @@ commands:
   mail:
     description: SimpleMail catch-all command
     aliases: [sm]
-    usage: §cSimpleMail help: /<command> help [topic]
+    usage: |
+      SimpleMail help: /<command> help [topic]
     permission: simplemail.*
     permission-message: ""
 
