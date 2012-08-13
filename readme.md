@@ -1,6 +1,12 @@
 # SimpleMail v2.0  
 
-### Contents  
+GitHub source here is usually stable, but sometimes not; the latest stable build can be found [here][stable] for easy access.
+
+### Announcements
+
+__8.13.12 - 11:32__: SimpleMail v2.0 is almost ready for a stable release. 
+
+### README contents  
 1. SimpleMail help
 2. Changes from v1.0  
 3. New features in v2.x  
@@ -119,3 +125,4 @@ A previous copy of v2.0 (now trashed, of course) used the basic built-in Bukkit 
 
 [1]: http://github.com/l3eta
 [2]: http://www.xkcd.com/844
+[stable]: https://github.com/x3chaos/simplemail/tree/master/exports/stable
