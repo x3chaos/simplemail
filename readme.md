@@ -1,6 +1,6 @@
 # SimpleMail v2.0  
 
-[Exports]  
+[Exports][exports]  
 [Stable builds][stable]  
 [Nightly builds][nightly]  
 Download the latest version
