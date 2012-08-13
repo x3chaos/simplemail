@@ -3,7 +3,7 @@
 [Exports][exports]  
 [Stable builds][stable]  
 [Nightly builds][nightly]  
-Download the latest version
+[Download the latest version][latest]
 
 
 ### Contents  
@@ -131,3 +131,4 @@ A previous copy of v2.0 (now trashed, of course) used the basic built-in Bukkit 
 [exports]: https://github.com/x3chaos/simplemail/tree/master/exports
 [nightly]: https://github.com/x3chaos/simplemail/tree/master/exports/nightly
 [stable]: https://github.com/x3chaos/simplemail/tree/master/exports/stable
+[latest]: https://github.com/x3chaos/simplemail/raw/master/exports/stable/SimpleMail-2.0-S1.jar
