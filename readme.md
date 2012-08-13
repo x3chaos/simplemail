@@ -121,7 +121,7 @@ A previous copy of v2.0 (now trashed, of course) used the basic built-in Bukkit 
 
 ***
 
-######SimpleMail v2.x &copy; 2012 [x3chaos] (Shawn Lutch). Last README update at 11:57 on 8/8/12.
+######SimpleMail v2.x &copy; 2012 [x3chaos] \(Shawn Lutch\). Last README update at 11:57 on 8/8/12.
 
 [1]: http://www.xkcd.com/844
 
