@@ -7,7 +7,7 @@ import org.x3.mail.util.Message;
 
 public class MessageReadEvent extends Event {
 
-	private static HandlerList handlers;
+	private static HandlerList handlers = new HandlerList();
 	private final CommandSender sender;
 	private final Message[] messages;
 

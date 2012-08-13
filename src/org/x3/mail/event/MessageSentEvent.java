@@ -6,7 +6,7 @@ import org.x3.mail.util.Message;
 
 public class MessageSentEvent extends Event {
 
-	private static HandlerList handlers;
+	private static HandlerList handlers = new HandlerList();
 	private final Message message;
 
 	public MessageSentEvent(Message message) {
