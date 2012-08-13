@@ -1,12 +1,12 @@
 # SimpleMail v2.0  
 
-GitHub source here is usually stable, but sometimes not; the latest stable build can be found [here][stable] for easy access.
+[Exports]  
+[Stable builds][stable]  
+[Nightly builds][nightly]  
+Download the latest version
 
-### Announcements
 
-__8.13.12 - 11:32__: SimpleMail v2.0 is almost ready for a stable release. 
-
-### README contents  
+### Contents  
 1. SimpleMail help
 2. Changes from v1.0  
 3. New features in v2.x  
@@ -42,7 +42,7 @@ _(Note: at the time of this writing, the current CraftBukkit version is CB 1.3.1
 
 #### Credit where credit is due
 
-While writing horribly underdone one-class Bukkit plugins, I got a lot of help and pointers from [l3eta][1], and the code for v2.x definitely shows it. In fact, the entirety of the ``org.l3eta`` package is comprised of (adapted) code gotten from l3eta.
+While writing horribly underdone one-class Bukkit plugins, I got a lot of help and pointers from [l3eta], and the code for v2.x definitely shows it. In fact, the entirety of the ``org.l3eta`` package is comprised of (adapted) code gotten from l3eta.
 
 #### Documentation
 
@@ -60,7 +60,7 @@ In the v1.0 releases, SimpleMail used a system that was so simple that it was co
 
 Firstly, you probably are. :P
 
-SimpleMail v1.0 used only two classes - the main class extending `org.bukkit.plugin.java.JavaPlugin` and the implementation of the `CommandExecutor` interface. While I'm a big believer in consolidating several extra classes into one bigger class, the main class was turning into [a mass of kludges and spaghetti code][2] and was almost impossible for me to keep track of, and the `CommandExecutor` wasn't holding up much better. So, I trashed the whole thing after releasing 1.0 via BukkitDev and the Bukkit forums and fumed for about a month (that's a lie, of course; four hours of it consisted of fuming, immediately followed by sleep and later picking up JavaScript and spending a month writing various Turntable bots). And after about a week of sitting down and fiddling with code, we have SimpleMail v2.0.
+SimpleMail v1.0 used only two classes - the main class extending `org.bukkit.plugin.java.JavaPlugin` and the implementation of the `CommandExecutor` interface. While I'm a big believer in consolidating several extra classes into one bigger class, the main class was turning into [a mass of kludges and spaghetti code][1] and was almost impossible for me to keep track of, and the `CommandExecutor` wasn't holding up much better. So, I trashed the whole thing after releasing 1.0 via BukkitDev and the Bukkit forums and fumed for about a month (that's a lie, of course; four hours of it consisted of fuming, immediately followed by sleep and later picking up JavaScript and spending a month writing various Turntable bots). And after about a week of sitting down and fiddling with code, we have SimpleMail v2.0.
 
 Admittedly, the v2.x release only slightly fixes the readability issue. The addition of separate classes for separate processes and the `Message` class only makes it a _little_ easier for me to keep up with my own code, but it makes it worlds easier to debug.  
 
@@ -121,8 +121,13 @@ A previous copy of v2.0 (now trashed, of course) used the basic built-in Bukkit 
 
 ***
 
-######SimpleMail v2.x &copy; 2012 x3chaos (Shawn Lutch). Last README update at 11:57 on 8/8/12.
+######SimpleMail v2.x &copy; 2012 [x3chaos] (Shawn Lutch). Last README update at 11:57 on 8/8/12.
 
-[1]: http://github.com/l3eta
-[2]: http://www.xkcd.com/844
+[1]: http://www.xkcd.com/844
+
+[l3eta]: http://github.com/l3eta
+[x3chaos]: http://github.com/x3chaos
+
+[exports]: https://github.com/x3chaos/simplemail/tree/master/exports
+[nightly]: https://github.com/x3chaos/simplemail/tree/master/exports/nightly
 [stable]: https://github.com/x3chaos/simplemail/tree/master/exports/stable
