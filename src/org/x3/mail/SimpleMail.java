@@ -101,7 +101,7 @@ public class SimpleMail extends JavaPlugin {
 		playerMail.add(message);
 		mail.put(recipient, playerMail);
 		if (recipient.equalsIgnoreCase("console")) {
-			log.info(ChatColor.GREEN + "New mail for Console");
+			log.info("New mail for Console");
 		} else if (isOnline(recipient)) {
 			notifyPlayer(getServer().getPlayer(recipient));
 		}
