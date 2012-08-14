@@ -36,13 +36,15 @@ _(Note: items inside_ `<these>` _are required, whereas items inside_ `[these]` _
 
 Minecraft 1.3.1 consisted of a few bug fixes, some launcher updates, some behind-the-scenes stability upgrades, a ton of single-player updates including optional toggleable LAN hosting, and a bunch of additions to multiplayer functionality. At first, it might not seem like that big of a deal, until you realize that _the Bukkit team had to update everything as well_. They did (and are still doing) a damn fine job, and their work makes the plugin devs' work easier. 
 
-SimpleMail v2.x is fully compatible and tested with 1.3.1.
+SimpleMail v2.x is fully compatible and tested with 1.3.1-R1.0.
 
 _(Note: at the time of this writing, the current CraftBukkit version is CB 1.3.1-R1.0. By the time that you read this, CraftBukkit will probably have been updated at least once. Such is life.)_
 
 #### Credit where credit is due
 
-While writing horribly underdone one-class Bukkit plugins, I got a lot of help and pointers from [l3eta], and the code for v2.x definitely shows it. In fact, the entirety of the ``org.l3eta`` package is comprised of (adapted) code gotten from l3eta.
+The entirety of the `org.l3eta` package consists of minor argument manipulation code such as argument completion (such as `complete()` and `sliceArray()`) gotten from [l3eta].
+
+I had no idea how to use an `Enum` until I read through the [Bukkit] code for [`Difficulty`][2] and [`GameMode`][3].
 
 #### Documentation
 
@@ -121,12 +123,15 @@ A previous copy of v2.0 (now trashed, of course) used the basic built-in Bukkit 
 
 ***
 
-######SimpleMail v2.x &copy; 2012 [x3chaos] \(Shawn Lutch\). Last README update at 11:57 on 8/8/12.
+######SimpleMail v2.x &copy; 2012 [x3chaos] \(Shawn Lutch\). Last README update at 22:46 on 8/13/12.
 
 [1]: http://www.xkcd.com/844
+[2]: https://github.com/Bukkit/Bukkit/blob/master/src/main/java/org/bukkit/Difficulty.java
+[3]: https://github.com/Bukkit/Bukkit/blob/master/src/main/java/org/bukkit/GameMode.java
 
 [l3eta]: http://github.com/l3eta
 [x3chaos]: http://github.com/x3chaos
+[Bukkit]: http://github.com/Bukkit/Bukkit
 
 [exports]: https://github.com/x3chaos/simplemail/tree/master/exports
 [nightly]: https://github.com/x3chaos/simplemail/tree/master/exports/nightly
