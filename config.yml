@@ -1,0 +1,4 @@
+# SimpleMail configuration file
+admins:
+  protected: true
+  list: [ x3chaos, kajtaotsu ]

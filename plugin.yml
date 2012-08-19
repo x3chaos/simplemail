@@ -13,11 +13,19 @@ commands:
     description: SimpleMail catch-all command
     aliases: [sm]
     usage: |
+      Incorrect usage.
       SimpleMail help: /<command> help [topic]
-    permission: simplemail.*
-    permission-message: ""
 
 permissions:
-  simplemail.*:
-    description: Gives access to /mail.
+  simplemail.send.*:
+    description: Allows a user to send any message to anyone
+    default: op
+    children:
+      simplemail.send.admin: true
+      simplemail.send.player: true
+  simplemail.send.admin:
+    description: Allows a player to send a message to a protected admin
+    default: false
+  simplemail.send.player:
+    description: Allows a player to send a message to a non-admin player
     default: true
