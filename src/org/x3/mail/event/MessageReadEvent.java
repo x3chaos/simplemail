@@ -1,5 +1,7 @@
 package org.x3.mail.event;
 
+import java.util.ArrayList;
+
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -9,9 +11,9 @@ public class MessageReadEvent extends Event {
 
 	private static HandlerList handlers = new HandlerList();
 	private final CommandSender sender;
-	private final Message[] messages;
+	private final ArrayList<Message> messages;
 
-	public MessageReadEvent(CommandSender sender, Message[] messages) {
+	public MessageReadEvent(CommandSender sender, ArrayList<Message> messages) {
 		this.sender = sender;
 		this.messages = messages;
 	}
@@ -20,7 +22,7 @@ public class MessageReadEvent extends Event {
 		return sender;
 	}
 
-	public Message[] getMessages() {
+	public ArrayList<Message> getMessages() {
 		return messages;
 	}
 

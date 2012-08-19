@@ -7,11 +7,14 @@ public class Message {
 	 * feel like adding them.
 	 */
 	private final String messageFormat = "<%s> %s";
+	private final String sentFormat = "To %s: %s";
+	private boolean cancel;
+	private boolean unread;
 
 	private String sender;
 	private String recipient;
 	private String message;
-	MailPriority priority;
+	private MailPriority priority;
 
 	public Message(String sender, String recipient, String message,
 			MailPriority priority) {
@@ -19,6 +22,8 @@ public class Message {
 		this.recipient = recipient;
 		this.message = message;
 		this.priority = priority;
+		cancel = false;
+		unread = true;
 	}
 
 	public Message(Parser parser) {
@@ -62,7 +67,15 @@ public class Message {
 		return messageFormat;
 	}
 
-	// TODO determine whether a setter is necessary
+	/**
+	 * Returns the format of the message when it is sent
+	 * 
+	 * @return Sent format of the message
+	 */
+
+	public String getSentFormat() {
+		return sentFormat;
+	}
 
 	/**
 	 * Returns the priority of the message
@@ -71,6 +84,45 @@ public class Message {
 	 */
 	public MailPriority getPriority() {
 		return priority;
+	}
+
+	/**
+	 * Returns whether the message has been cancelled. Modelled after event
+	 * cancellations.
+	 * 
+	 * @return Cancelled
+	 */
+	public Boolean isCancelled() {
+		return cancel;
+	}
+
+	/**
+	 * Cancels or un-cancels a message. Modelled after event cancellations.
+	 * 
+	 * @param cancel
+	 *            Whether to cancel the message
+	 */
+	public void setCancelled(boolean cancel) {
+		this.cancel = cancel;
+	}
+
+	public Boolean isUnread() {
+		return unread;
+	}
+
+	public void setUnread(boolean unread) {
+		this.unread = unread;
+	}
+
+	public String getPrefix() {
+		switch (priority.getCode()) {
+		case 5:
+			return "REPORT: ";
+		case 4:
+			return "URGENT: ";
+		default:
+			return "";
+		}
 	}
 
 }

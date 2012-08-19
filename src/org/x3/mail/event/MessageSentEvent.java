@@ -8,13 +8,23 @@ public class MessageSentEvent extends Event {
 
 	private static HandlerList handlers = new HandlerList();
 	private final Message message;
+	boolean cancel;
 
 	public MessageSentEvent(Message message) {
 		this.message = message;
+		this.cancel = false;
 	}
 
 	public Message getMessage() {
 		return message;
+	}
+	
+	public Boolean isCancelled() {
+		return cancel;
+	}
+	
+	public void setCancelled(Boolean cancel) {
+		this.cancel = cancel;
 	}
 
 	@Override

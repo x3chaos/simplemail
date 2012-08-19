@@ -2,7 +2,6 @@ package org.x3.mail;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -10,8 +9,10 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
-import org.x3.mail.event.MessageReadEvent;
 import org.x3.mail.event.MessageSentEvent;
+import org.x3.mail.util.MailPriority;
+import org.x3.mail.util.Mailbox;
+import org.x3.mail.util.Mailbox.BoxType;
 import org.x3.mail.util.Message;
 import org.x3.mail.util.Parser;
 
@@ -36,36 +37,42 @@ public class SMExecutor implements CommandExecutor {
 		}
 		String sender = getName(cmdSender);
 		if (args[0].equalsIgnoreCase("send")) {
-			if (args.length < 3) {
-				return false;
-			}
 			args[0] = sender;
-			Parser parser = new Parser(args);
-			parser.debugInfo(sm.getLogger());
-			Message message = new Message(parser);
-			cmdSender.sendMessage("Sending message to " + parser.getRecipient()
-					+ " with priority " + parser.getPriority());
-			sm.send(message);
+			Message message = new Message(new Parser(args));
+			message.setCancelled(sm.getPerms().shouldCancel(message));
+			send(message);
 			pm.callEvent(new MessageSentEvent(message));
 			return true;
+		} else if (args[0].equalsIgnoreCase("get")) {
+			String whichBox = (args.length == 1) ? "unread" : args[1]
+					.toLowerCase();
+			BoxType boxType = (BoxType.getFromType(whichBox) != null) ? BoxType
+					.getFromType(whichBox) : BoxType.getFromType("unread");
+			Mailbox box = sm.getMailbox(sender);
+			ArrayList<Message> messages = box.get(boxType);
+			if (messages.size() == 0) {
+				cmdSender.sendMessage(ChatColor.GREEN + "You have no "
+						+ boxType.getType() + " mail.");
+			} else {
+				ChatColor defaultColor = ChatColor.GRAY;
+				cmdSender.sendMessage(defaultColor + "== Mail: " + sender
+						+ " - " + boxType.getType() + " (" + messages.size()
+						+ ") ");
+				for (Message m : messages) {
+					Boolean urgent = m.getPriority() == MailPriority.URGENT;
+					ChatColor color = (urgent) ? ChatColor.RED : defaultColor;
+					String pre = (urgent) ? "URGENT: " : "";
+					cmdSender.sendMessage(color
+							+ pre
+							+ String.format(m.getFormat(), m.getSender(),
+									m.getMessage()));
+				}
+			}
+			return true;
 		} else if (args[0].equalsIgnoreCase("help")) {
-			String topic = (args.length > 1) ? getTopic(args[1].toLowerCase())
+			String topic = (args.length == 2) ? getTopic(args[1].toLowerCase())
 					: getTopic("help");
 			cmdSender.sendMessage(topic);
-			return true;
-		} else if (args[0].equalsIgnoreCase("get")) {
-			if (!(sm.hasMail(sender))) {
-				cmdSender.sendMessage(ChatColor.GRAY + "You have no new mail.");
-				return true;
-			}
-			if (args.length > 1) {
-				return false;
-			}
-			ArrayList<Message> playerMail = sm.getMail(sender);
-			Message[] messages = reorderMessages(playerMail);
-			readMessages(cmdSender, messages);
-			sm.removeMail(sender);
-			pm.callEvent(new MessageReadEvent(cmdSender, messages));
 			return true;
 		}
 		return false;
@@ -78,7 +85,7 @@ public class SMExecutor implements CommandExecutor {
 	 *            The requested topic
 	 * @return The information on that topic
 	 */
-	private String getTopic(String topic) {
+	public String getTopic(String topic) {
 		topic = topic.toLowerCase();
 		if (helpTopics.containsKey(topic)) {
 			return helpTopics.get(topic);
@@ -105,60 +112,35 @@ public class SMExecutor implements CommandExecutor {
 		}
 	}
 
-	/**
-	 * Reorders the messages in a player's inbox by priority (currently only
-	 * performed when mail is requested)
-	 * 
-	 * @param mail
-	 *            The player's inbox
-	 * @return Reordered {@code Message[]} object (for more accurate order than
-	 *         an {@code ArrayList<Message>}
-	 */
-	private Message[] reorderMessages(ArrayList<Message> mail) {
-		Message[] result = new Message[mail.size()];
-		int count = 0;
-		for (int i = 4; i >= 0; i--) {
-			for (Iterator<Message> it = mail.iterator(); it.hasNext();) {
-				Message m = it.next();
-				if (m.getPriority().getCode() == i) {
-					result[count] = m;
-					it.remove();
-					count++;
-				}
+	private void send(Message message) {
+		if (message.isCancelled()) {
+			Player sender = sm.getPlayer(message.getSender());
+			sender.sendMessage(ChatColor.RED
+					+ "You don't have permission to do that.");
+		} else {
+			String recipient = message.getRecipient();
+			Mailbox box = sm.getMailbox(recipient);
+			box.addUnread(message);
+			sm.updateMailbox(box);
+			if (message.getSender().equalsIgnoreCase("Console")) {
+				sm.getLogger().info("Message sent to " + recipient + ".");
+			} else {
+				sm.getPlayer(message.getSender()).sendMessage(
+						ChatColor.GREEN + "Message sent to " + recipient + ".");
 			}
-		}
-		return result;
-	}
-
-	/**
-	 * Executes '/mail get' from the perspective of the given CommandSender.
-	 * This method should only be called after the player's mail has been
-	 * checked and messages have been reordered.
-	 * 
-	 * @param sender
-	 *            The sender of the command (CommandSender used for console
-	 *            support)
-	 * @param messages
-	 *            Reordered messages
-	 */
-
-	public void readMessages(CommandSender sender, Message[] messages) {
-		sender.sendMessage(ChatColor.GRAY
-				+ String.format("----- Mail: %s -----", getName(sender)));
-		for (int i = 0; i < messages.length; i++) {
-			Message message = messages[i];
-			int priority = message.getPriority().getCode();
-			ChatColor color = (priority > 3) ? ChatColor.RED : ChatColor.GRAY;
-			String prefix = (priority > 3) ? "URGENT: " : "";
-			String text = String.format(message.getFormat(),
-					message.getSender(), message.getMessage());
-			sender.sendMessage(color + prefix + text);
+			if (sm.isOnline(box.getOwner())) {
+				Player _recip = sm.getPlayer(box.getOwner());
+				int count = box.getUnread().size();
+				_recip.sendMessage(ChatColor.GREEN
+						+ String.format("You have %s new messages.", count + ""));
+			}
 		}
 	}
 
 	static {
 		helpTopics.put("send", "/mail send <target> [priority:#] <message>");
-		helpTopics.put("get", "/mail get");
+		helpTopics.put("get",
+				"/mail get [box] - Use \'/mail help boxes\' for more help");
 		helpTopics.put("help", "Topics: send, get");
 	}
 
