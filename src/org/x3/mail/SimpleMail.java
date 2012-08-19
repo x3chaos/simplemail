@@ -1,27 +1,33 @@
 package org.x3.mail;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.x3.mail.util.Message;
+import org.x3.mail.permissions.MailPermissions;
+import org.x3.mail.util.Mailbox;
 
 public class SimpleMail extends JavaPlugin {
 
-	HashMap<String, ArrayList<Message>> mail;
-	MailHandler mailHandler;
-	Logger log;
+	private HashMap<String, Mailbox> mail;
+	private MailPermissions perms;
+	private MailHandler mailHandler;
+	private Logger log;
 
 	@Override
 	public void onEnable() {
 		log = this.getLogger();
-		mailHandler = new MailHandler(new File(getDataFolder(),
-				"simplemail.map"));
-		mail = new HashMap<String, ArrayList<Message>>();
+		perms = new MailPermissions(this);
+		mailHandler = new MailHandler(new File(getDataFolder(), ".boxes"));
+		loadMailFromFile();
+		getConfig().options().copyDefaults(true);
+		saveConfig();
 		this.getCommand("mail").setExecutor(new SMExecutor(this));
 		log.info("SimpleMail enabled.");
 	}
@@ -35,39 +41,6 @@ public class SimpleMail extends JavaPlugin {
 	 */
 	public Player getPlayer(String name) {
 		return getServer().getPlayer(name);
-	}
-
-	/**
-	 * Returns whether the specified player has unread mail.
-	 * 
-	 * @param player
-	 *            The player's name
-	 * @return Whether the player has unread mail.
-	 */
-	public boolean hasMail(String player) {
-		return mail.containsKey(player.toLowerCase());
-	}
-
-	/**
-	 * Returns the player's mail.
-	 * 
-	 * @param player
-	 *            Name of the player
-	 * @return Unread messages, or null if the player has no new mail.
-	 */
-	public ArrayList<Message> getMail(String player) {
-		return (mail.containsKey(player.toLowerCase())) ? mail.get(player
-				.toLowerCase()) : new ArrayList<Message>();
-	}
-
-	/**
-	 * Deletes all of the player's mail.
-	 * 
-	 * @param player
-	 *            Name of the player
-	 */
-	public void removeMail(String player) {
-		mail.remove(player.toLowerCase());
 	}
 
 	/**
@@ -86,37 +59,76 @@ public class SimpleMail extends JavaPlugin {
 		return false;
 	}
 
-	/**
-	 * Send a message. The target player is specified within the message.
-	 * 
-	 * @param message
-	 *            The message to send
-	 */
-	public void send(Message message) {
-		String recipient = message.getRecipient();
-		ArrayList<Message> playerMail = getMail(recipient);
-		if (hasMail(recipient)) {
-			mail.remove(recipient);
+	public MailPermissions getPerms() {
+		return perms;
+	}
+
+	public Boolean isAdmin(String who) {
+		List<String> admins = getConfig().getStringList("admins.list");
+		for (String s : admins) {
+			if (s.equalsIgnoreCase(who)) {
+				return true;
+			}
 		}
-		playerMail.add(message);
-		mail.put(recipient, playerMail);
-		if (recipient.equalsIgnoreCase("console")) {
-			log.info("New mail for Console");
-		} else if (isOnline(recipient)) {
-			notifyPlayer(getServer().getPlayer(recipient));
+		return false;
+	}
+
+	public Boolean adminsProtected() {
+		return getConfig().getBoolean("admins.protected");
+	}
+
+	public Mailbox getMailbox(String player) {
+		player = player.toLowerCase();
+		return mail.containsKey(player) ? mail.get(player)
+				: new Mailbox(player);
+	}
+
+	public void updateMailbox(Mailbox box) {
+		String owner = box.getOwner();
+		mail.remove(owner);
+		mail.put(owner, box);
+	}
+
+	private HashMap<String, Mailbox> loadMail() {
+		try {
+			return mailHandler.load();
+		} catch (FileNotFoundException e) {
+			log.warning("Mail file does not exist!");
+			log.info("Don't worry, we'll crack open a fresh one for you.");
+			return new HashMap<String, Mailbox>();
+		} catch (ClassNotFoundException | IOException e) {
+			log.log(Level.SEVERE, "Could not load mail from file!" + e);
+			return new HashMap<String, Mailbox>();
 		}
 	}
 
-	/**
-	 * Notify the player that they have new messages.
-	 * 
-	 * @param player
-	 *            Player to notify
-	 */
-	public void notifyPlayer(Player player) {
-		player.sendMessage(ChatColor.GREEN
-				+ String.format("You have %s new message(s).",
-						getMail(player.getName()).size()));
+	public void loadMailFromFile() {
+		mail = loadMail();
+		saveMail();
+	}
+
+	public void saveMail() {
+		try {
+			mailHandler.save(mail);
+		} catch (Exception e) {
+			log.log(Level.SEVERE, "Couldn't save mail!", e);
+		}
+	}
+
+	public HashMap<String, Mailbox> getMail() {
+		return mail;
+	}
+
+	public void addMailbox(String player, Mailbox mailbox) {
+		player = player.toLowerCase();
+		mail.put(player, mailbox);
+		saveMail();
+	}
+
+	public void addMailbox(String player) {
+		player = player.toLowerCase();
+		mail.put(player, new Mailbox(player));
+		saveMail();
 	}
 
 }
