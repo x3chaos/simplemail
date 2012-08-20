@@ -1,8 +1,6 @@
 package org.x3.mail;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
@@ -92,12 +90,9 @@ public class SimpleMail extends JavaPlugin {
 	private HashMap<String, Mailbox> loadMail() {
 		try {
 			return mailHandler.load();
-		} catch (FileNotFoundException e) {
-			log.warning("Mail file does not exist!");
+		} catch (Exception ex) {
+			log.severe("Couldn't open from the mail file!");
 			log.info("Don't worry, we'll crack open a fresh one for you.");
-			return new HashMap<String, Mailbox>();
-		} catch (ClassNotFoundException | IOException e) {
-			log.log(Level.SEVERE, "Could not load mail from file!" + e);
 			return new HashMap<String, Mailbox>();
 		}
 	}
