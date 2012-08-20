@@ -2,6 +2,7 @@ package org.x3.mail;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Logger;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -18,13 +19,15 @@ import org.x3.mail.util.Parser;
 
 public class SMExecutor implements CommandExecutor {
 
+	private static HashMap<String, String> helpTopics = new HashMap<String, String>();
 	private final SimpleMail sm;
 	private final PluginManager pm;
-	private static HashMap<String, String> helpTopics = new HashMap<String, String>();
+	private final Logger log;
 
 	public SMExecutor(SimpleMail sm) {
 		this.sm = sm;
 		this.pm = sm.getServer().getPluginManager();
+		this.log = sm.getLogger();
 	}
 
 	// TODO CLEAN THE HELL OUT OF THIS.
@@ -123,7 +126,7 @@ public class SMExecutor implements CommandExecutor {
 			box.addUnread(message);
 			sm.updateMailbox(box);
 			if (message.getSender().equalsIgnoreCase("Console")) {
-				sm.getLogger().info("Message sent to " + recipient + ".");
+				log.info("Message sent to " + recipient + ".");
 			} else {
 				sm.getPlayer(message.getSender()).sendMessage(
 						ChatColor.GREEN + "Message sent to " + recipient + ".");
@@ -133,6 +136,8 @@ public class SMExecutor implements CommandExecutor {
 				int count = box.getUnread().size();
 				_recip.sendMessage(ChatColor.GREEN
 						+ String.format("You have %s new messages.", count + ""));
+			} else if (recipient.equalsIgnoreCase("console")) {
+				log.info("New mail for Console.");
 			}
 		}
 	}
