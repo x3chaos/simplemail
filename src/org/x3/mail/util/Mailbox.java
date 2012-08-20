@@ -2,6 +2,7 @@ package org.x3.mail.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class Mailbox {
 
@@ -19,6 +20,21 @@ public class Mailbox {
 
 	public Mailbox(String owner) {
 		this.owner = owner;
+	}
+
+	public void refresh() {
+		ArrayList<Message> newUnread = unread;
+		ArrayList<Message> newRead = read;
+		for (Iterator<Message> it = newUnread.iterator(); it.hasNext();) {
+			Message m = it.next();
+			if (!m.isUnread()) {
+				it.remove();
+			}
+		}
+		boxes.remove(BoxType.UNREAD);
+		boxes.put(BoxType.UNREAD, newUnread);
+		boxes.remove(BoxType.READ);
+		boxes.put(BoxType.READ, newRead);
 	}
 
 	private void add(Message message, BoxType newBox) {
