@@ -60,7 +60,7 @@ public class SMExecutor implements CommandExecutor {
 				ChatColor defaultColor = ChatColor.GRAY;
 				cmdSender.sendMessage(defaultColor + "== Mail: " + sender
 						+ " - " + boxType.getType() + " (" + messages.size()
-						+ ") ");
+						+ ") ==");
 				for (Message m : messages) {
 					Boolean urgent = m.getPriority() == MailPriority.URGENT;
 					ChatColor color = (urgent) ? ChatColor.RED : defaultColor;
@@ -69,7 +69,9 @@ public class SMExecutor implements CommandExecutor {
 							+ pre
 							+ String.format(m.getFormat(), m.getSender(),
 									m.getMessage()));
+					m.setUnread(false);
 				}
+				box.refresh();
 			}
 			return true;
 		} else if (args[0].equalsIgnoreCase("help")) {
