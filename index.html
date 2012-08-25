@@ -1,0 +1,71 @@
+---
+layout: pluginsite
+title: "SimpleMail"
+pluginTagline: "A simple mail system for Bukkit servers"
+pluginRepo: "http://github.com/x3chaos/simplemail"
+---
+
+<div class="content">
+	<section class="toc">
+		<ol>
+			<li><a href="#1">Links</a></li>
+			<li><a href="#2">SimpleMail Help</a></li>
+			<li><a href="#3">Changes from v1.0</a></li>
+			<li><a href="#4">New features</a></li>
+			<li><a href="#5">Planned features</a></li>
+		</ol>
+	</section>
+	<section>
+		<a name="1"></a>
+		<h3 class="link" style="text-decoration:underline;">Links</h3>
+		<p class="link"><a title="Exports" href="https://github.com/x3chaos/simplemail/tree/master/exports">Exports</a></p>
+		<p class="link"><a title="Current version" href="https://github.com/x3chaos/simplemail/raw/master/exports/stable/SimpleMail-2.0.jar">Download current</a></p>
+	</section>
+	<section>
+		<a name="2"></a>
+		<h3>SimpleMail Help</h3>
+		<p>SimpleMail v2.x has one catch-all command thus far: <code>/mail</code></p>
+		<ul>
+			<li><p><code>/mail help [topic]</code></p></li>
+			<li class="sub"><p>Access the in-game SimpleMail help</p></li>
+			<li><p><code>/mail send &lt;target&gt; [priority:#] &lt;message&gt;</code></p></li>
+			<li class="sub"><p>Send a message. Replace <code>#</code> in <code>priority:#</code> with the desired priority.</p></li>
+			<li class="sub"><p>Example: <code>/mail send x3chaos priority:4 Fix the server!</code></p></li>
+			<li><p><code>/mail get</code></p></li>
+			<li class="sub"><p>Get your and read all of your unread messages.</p></li>
+		</ul>
+		<p><em>Note: items inside </em><code>&lt;these&gt;</code><em> are required, whereas items inside </em><code>[these]</code><em> are optional.</em></p>
+	</section>
+	<section>
+		<a name="3"></a>
+		<h3>Changes from v1.0</h3>
+		<h4>Total code rewrite</h4>
+		<p>SimpleMail v1.0 literally used only two classes, including the extension of <code>org.bukkit.plugin.java.JavaPlugin</code>. Yeah, it was <em>bad</em>. Not only was it impossible for me to keep up with my own code, it was just set up really stupidly and evolved into <a title="xkcd: Good Code" href="http://www.xkcd.com/844">a mass of kludges and spaghetti code</a> (see, I had to get that in there somewhere in the new site).</p>
+		<p>So, I did what any semi-new coder would do: I scrapped the whole damn thing and started over from scratch. It's taken longer and it's still in-dev, but it's ready to be released, thankfully. Expect quiiite a few more updates.</p>
+		<h4>Plenty of new features</h4>
+		<p>Well, let me correct that: plenty of new features <em>in theory</em>. I have quite a few ideas, and a few others have given me some pretty good ones as well, but current developments in this thing I'm supposed to have called a "life" are keeping me from putting <span style="text-decoration:line-through;">all of my time</span> time not already spent on maintaining two websites and a Minecraft server into SimpleMail, which I would actually love to do. But, such is "life."<p>
+		<h4>New site and stuff, yeah</h4>
+		<p>I had a pretty good site up for SimpleMail until I decided to do something neat for a change (i.e. start a <a title="Blog" href="http://x3chaos.github.com/index.html?src=gh">blog</a>), and that screwed it up. So here I am at 2 in the morning fixing it.</p>
+		<p>Christ, it's two in the morning.</p>
+	</section>
+	<section>
+		<a name="4"></a>
+		<h3>New features</h3>
+		<p>Ah, yes: <em>here's</em> the part where I tell you about the new features implemented in v2.x.</p>
+		<ul>
+			<li><p>Message priority and sorting via <code>[priority:#]</code></p></li>
+			<li><p><code>Message</code> objects</p></li>
+			<li><p>Command parser</p></li>
+		</ul>
+	</section>
+	<section>
+		<a name="5"></a>
+		<h3>Planned features, to-do</h3>
+		<ul>
+			<li><p>Color compatibility</p></li>
+			<li><p>Mailbox pagination</p></li>
+			<li><p>Separate mailboxes</p></li>
+			<li><p>Better permissions</p></li>
+		</ul>
+	</section>
+</div>
