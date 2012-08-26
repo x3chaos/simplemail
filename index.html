@@ -27,10 +27,11 @@ h1 {
 <script type="text/javascript">
 $(document).ready(function() {
 	var i = 5;
-	window.setInterval(function() {
+	function timer() {
 		i--;
 		$("#timer").text("Click that link if you're not redirected there automatically after "+i+" seconds.");
-	}, 1000);
+	}
+	window.setInterval(timer, 1000);
 });
 </script>
 </head>
