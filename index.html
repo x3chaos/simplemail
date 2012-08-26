@@ -29,7 +29,7 @@ $(document).ready(function() {
 	var i = 5;
 	window.setInterval(function() {
 		i--;
-		$("#timer").text(i + "");
+		$("#timer").text("Click that link if you're not redirected there automatically after "+i+" seconds.");
 	}, 1000);
 });
 </script>
@@ -40,7 +40,7 @@ $(document).ready(function() {
 		<h1>404</h1>
 		<p>It's okay, we know where you want to go. <span style="color: #AAA;">(In fact, <em>we're taking you there right now</em>.)</span></p>
 		<p>Alert whoever linked you to this site that the correct link is <a title="SimpleMail" href="http://x3chaos.org/plugins/simplemail.html">http://x3chaos.org/plugins/simplemail.html</a> and that it should be updated as soon as possible.</p>
-		<p style="color: #AAA;">Click that link if you're not redirected there automatically after <span id="timer">5</span> seconds.</p>
+		<p style="color: #AAA;">Click that link if you're not redirected there automatically after 5 seconds.</p>
 	</div>
 </body>
 
