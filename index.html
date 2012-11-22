@@ -1,42 +1,162 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<style>
-body {
-	background: #CCC;
-	font-family: Helvetica, Arial, sans-serif;
-}
-.wrapper {
-	text-align: center;
-	display: block;
-	float: none;
-	top: auto;
-	position: relative;
-	margin: 30px auto 0 auto;
-	border: 1px solid #444;
-	padding: 15px 25px;
-	background: #FFF;
-	width: 640px;
-}
-p.gray {
-	color: #AAA;
-}
-h1 {
-	color: #CCC;
-}
-</style>
-<head>
-<link rel="icon" href="./img/favicon.ico" />
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
-</head>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Simplemail by x3chaos</title>
 
-<body>
-	<div class="wrapper">
-		<h1 style="color:red;">404</h1>
-		<p>It's okay, we know where you want to go.</p>
-		<p class="gray">(In fact, <em>we're taking you there right now</em>.)</p>
-		<p>Alert whoever linked you to this site that the correct link is <a title="SimpleMail" href="http://x3chaos.org/plugins/simplemail.html">http://x3chaos.org/plugins/simplemail.html</a> and that it should be updated as soon as possible.</p>
-		<p style="color: #AAA;">Click that link if you're not redirected there automatically after 5 seconds.</p>
-	</div>
-</body>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Simplemail</h1>
+        <p>SimpleMail - A simpler mail system for Bukkit servers</p>
 
+        <p class="view"><a href="https://github.com/x3chaos/simplemail">View the Project on GitHub <small>x3chaos/simplemail</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/x3chaos/simplemail/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/x3chaos/simplemail/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/x3chaos/simplemail">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>SimpleMail v2.0</h1>
+
+<p><a href="https://github.com/x3chaos/simplemail/tree/master/exports">Exports</a><br><a href="https://github.com/x3chaos/simplemail/tree/master/exports/stable">Stable builds</a><br><a href="https://github.com/x3chaos/simplemail/tree/master/exports/nightly">Nightly builds</a><br><a href="https://github.com/x3chaos/simplemail/raw/master/exports/stable/SimpleMail-2.0-S1.jar">Download the latest version</a></p>
+
+<h3>Contents</h3>
+
+<ol>
+<li>SimpleMail help</li>
+<li>Changes from v1.0<br>
+</li>
+<li>New features in v2.x<br>
+</li>
+<li>Potential features/to-do<br>
+</li>
+</ol><hr><h2>1. SimpleMail help</h2>
+
+<p>SimpleMail v2.x has one catch-all command thus far: <code>/mail</code>  </p>
+
+<ul>
+<li><p><code>/mail help [topic]</code><br>
+Access the in-game SimpleMail help.</p></li>
+<li><p><code>/mail send &lt;target&gt; [priority:#] &lt;message&gt;</code><br>
+Send a message. Replace <code>[priority:#]</code> with the desired priority.<br>
+(Example: <code>/mail send x3chaos priority:3 Fix my server for me!</code>)</p></li>
+<li><p><code>/mail get</code><br>
+Get and read all of your unread messages.</p></li>
+</ul><p><em>(Note: items inside</em> <code>&lt;these&gt;</code> <em>are required, whereas items inside</em> <code>[these]</code> <em>are optional.)</em>    </p>
+
+<h2>2. Changes from v1.0</h2>
+
+<h4>Taming the 1.3.1 monster update</h4>
+
+<p>Minecraft 1.3.1 consisted of a few bug fixes, some launcher updates, some behind-the-scenes stability upgrades, a ton of single-player updates including optional toggleable LAN hosting, and a bunch of additions to multiplayer functionality. At first, it might not seem like that big of a deal, until you realize that <em>the Bukkit team had to update everything as well</em>. They did (and are still doing) a damn fine job, and their work makes the plugin devs' work easier. </p>
+
+<p>SimpleMail v2.x is fully compatible and tested with 1.3.1-R1.0.</p>
+
+<p><em>(Note: at the time of this writing, the current CraftBukkit version is CB 1.3.1-R1.0. By the time that you read this, CraftBukkit will probably have been updated at least once. Such is life.)</em></p>
+
+<h4>Credit where credit is due</h4>
+
+<p>The entirety of the <code>org.l3eta</code> package consists of minor argument manipulation code such as argument completion (such as <code>complete()</code> and <code>sliceArray()</code>) gotten from <a href="http://github.com/l3eta">l3eta</a>.</p>
+
+<p>I had no idea how to use an <code>Enum</code> until I read through the <a href="http://github.com/Bukkit/Bukkit">Bukkit</a> code for <a href="https://github.com/Bukkit/Bukkit/blob/master/src/main/java/org/bukkit/Difficulty.java"><code>Difficulty</code></a> and <a href="https://github.com/Bukkit/Bukkit/blob/master/src/main/java/org/bukkit/GameMode.java"><code>GameMode</code></a>.</p>
+
+<h4>Documentation</h4>
+
+<p>v1.0 had almost zero documentation built-in, which probably helped contribute to the clutter in the -ahem- two classes. With v2.x, documentation is built-in like it should be.</p>
+
+<h4>Total code rewrite</h4>
+
+<p>This topic has two parts: one for those with no experience in programming or coding, and one for those who do.</p>
+
+<h6>The "how do I writes codes :(" part</h6>
+
+<p>In the v1.0 releases, SimpleMail used a system that was so simple that it was complicated, if that makes sense. For me, from the perspective of the main developer, it was impossible to read and keep up with my own code. So I released what I had and trashed everything else, and after a month of taking time off with JavaScript, I got back to work and cranked out a releasable SimpleMail v2.0.</p>
+
+<h6>The "I'm definitely a better programmer than x3chaos" part</h6>
+
+<p>Firstly, you probably are. :P</p>
+
+<p>SimpleMail v1.0 used only two classes - the main class extending <code>org.bukkit.plugin.java.JavaPlugin</code> and the implementation of the <code>CommandExecutor</code> interface. While I'm a big believer in consolidating several extra classes into one bigger class, the main class was turning into <a href="http://www.xkcd.com/844">a mass of kludges and spaghetti code</a> and was almost impossible for me to keep track of, and the <code>CommandExecutor</code> wasn't holding up much better. So, I trashed the whole thing after releasing 1.0 via BukkitDev and the Bukkit forums and fumed for about a month (that's a lie, of course; four hours of it consisted of fuming, immediately followed by sleep and later picking up JavaScript and spending a month writing various Turntable bots). And after about a week of sitting down and fiddling with code, we have SimpleMail v2.0.</p>
+
+<p>Admittedly, the v2.x release only slightly fixes the readability issue. The addition of separate classes for separate processes and the <code>Message</code> class only makes it a <em>little</em> easier for me to keep up with my own code, but it makes it worlds easier to debug.  </p>
+
+<p>Oh, and that reminds me: there will be more original classes introduced as time progresses. As of now, the only utilized class is <code>org.x3.mail.util.Message</code>, but the addition of permissions support and other fun features will undoubtedly be followed by the addition of more objects. This coding stuff is fun!</p>
+
+<hr><h2>3. New features in v2.x</h2>
+
+<h4>Message priority and sorting</h4>
+
+<p>SimpleMail v2.x allows a message to be given a priority using the optional [priority:int] argument. SimpleMail will then take this given priority and sort the recipient's inbox by priority.  </p>
+
+<p>The 5 usable message priorities are as follows:</p>
+
+<ul>
+<li>
+<code>Lowest</code>: 0</li>
+<li>
+<code>Low</code>: 1</li>
+<li>
+<code>Normal</code>: 2 (default)</li>
+<li>
+<code>High</code>: 3</li>
+<li>
+<code>Highest</code>: 4</li>
+</ul><p>If an invalid priority is entered or one is not specified, the priority will default to <code>Normal</code>.</p>
+
+<p>I plan to integrate a sixth message priority option (<code>Report</code>), which will be only be available through a planned "report" function. More info on that later.</p>
+
+<h4>
+<code>Message</code> objects</h4>
+
+<p>To the average Bukkit player, this might not mean much, and really it's not that big of a deal as far as innovation.<br>
+Essentially, instead of only saving the text of the message like in v1.0, SimpleMail now saves the sender, recipient, text, priority, and any errors that the player made have made in entering the command (like using <code>priority:HIGH</code> instead of <code>priority:3</code>). This makes the entire system more flexible and easier to work with, especially from the developer's point of view.</p>
+
+<h4>Command parser</h4>
+
+<p>I've been wanting to try my hand at writing a command parser, and this is definitely a great time for it. For right now, the parser really only handles the message's priority.  </p>
+
+<p>Currently, whenever a message is sent, a new parser is created for that message, which is then used to create the <code>Message</code> object.</p>
+
+<hr><h2>4. Potential features/to-do</h2>
+
+<p>Most of these are features that I plan on putting in once I'm comfortable with the plugin as its basic functionality stands. Essentially, I want to make sure that the action sending and receiving messages is comfortable before I make it fancy.</p>
+
+<h4>Colors</h4>
+
+<p>Chat colors will eventually be a must. My first thought is the brute-force regex approach - running the message through a regular expression filter to replace codes with colors - but I'm going to keep looking into a better, more streamlined way of doing this (unless Bukkit will do it for me, in which case I won't bother).</p>
+
+<h4>Pagination</h4>
+
+<p>Think the vanilla <code>/help</code> command. I'm going to look through Bukkit's source and find out how they do the pagination for <code>/help</code>, and try to emulate it.</p>
+
+<h4>Mailboxes</h4>
+
+<p>I eventually want to create a system consisting of several mailboxes (inbox, trash, starred, etc.) and incorporate it into <code>/mail get</code>. This isn't hard, but it will involve some minor rewriting.  </p>
+
+<h4>Permissions</h4>
+
+<p>A previous copy of v2.0 (now trashed, of course) used the basic built-in Bukkit permission system to protect admins and limit who could send messages to whom. That will be reinstated, of course, but like I wrote above, it's being put off until I'm comfortable with how the plugin works.</p>
+
+<hr><h6>SimpleMail v2.x © 2012 <a href="http://github.com/x3chaos">x3chaos</a> (Shawn Lutch). Last README update at 22:46 on 8/13/12.</h6>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/x3chaos">x3chaos</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
 </html>
